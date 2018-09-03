@@ -1,0 +1,41 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: monospace;
+}
+
+main {
+    padding-top: 50px;
+}
+
+#gameport {
+    background: #eee;
+    display: block;
+}
+
+.input {
+    margin:  5px 0;
+}
+
+.inputContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.inputContainer label {
+    display: block;
+}
+
+.field {
+    margin-top: 20px;
+}
+
+.error {
+    margin: 20px;
+    padding: 12px 15px;
+    border: 1px solid #ff3333;
+    background: #ffe6e6;
+    color: #ff3333
+}

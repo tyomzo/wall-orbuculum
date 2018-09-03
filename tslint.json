@@ -1,0 +1,15 @@
+{
+    "extends": "tslint-config-standard",
+    "rules": {
+      "indent": [true, "spaces"],
+      "no-unused-variable": false,
+      "strict-type-predicates": false,
+      "ter-indent": [true, 4],
+      "semicolon": [true, "always", "ignore-bound-class-methods"],
+      "space-before-function-paren": ["error", {
+        "anonymous": "always",
+        "named": "never",
+        "asyncArrow": "ignore"
+      }]
+    }
+  }
