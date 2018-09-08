@@ -12,7 +12,7 @@ export class GameEventReader {
             return this.readBoom(chunks);
         }
         default: {
-            throw new Error(`Unknown payload received from server: ${payload}`);
+            throw new Error(`Unknown payload received from server: "${payload}"`);
         }
         }
     }

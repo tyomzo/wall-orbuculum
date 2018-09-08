@@ -11,6 +11,7 @@ main {
 #gameport {
     background: #eee;
     display: block;
+    cursor: none;
 }
 
 .input {

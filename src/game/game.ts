@@ -9,7 +9,6 @@ export class Game {
 
     public start() {
         this._engine.start(new Start(this._username));
-        console.debug('Game started');
     }
 
     onStateChanged(stateChange: StateChange): any {

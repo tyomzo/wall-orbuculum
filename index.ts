@@ -1,10 +1,13 @@
 import { app, BrowserWindow, Menu } from 'electron';
 import * as url from 'url';
 import * as path from 'path';
+import * as service from './service';
 
 let mainWindow: any = null;
 const windowWidth = 500;
 const windowHeight = 500;
+
+service.start();
 
 const devMenuTemplate = [
     {

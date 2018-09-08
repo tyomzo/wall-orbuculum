@@ -15,7 +15,7 @@ export abstract class GameBuilder {
             .then(() => {
                 let referee = this.createReferee();
                 let necromancer = this.createNecromancer();
-                let inputHandler = this.createInputHandler();
+                let inputHandler = this.createInputHandler(options.gameportx, options.gameporty);
                 let engine = this.createEngine(referee, necromancer, inputHandler);
                 return new Game(options.username, engine, this._renderer);
             });
@@ -24,12 +24,14 @@ export abstract class GameBuilder {
     public abstract initialize(options: GameOptions): Promise<void>;
     public abstract createReferee(): Referee;
     public abstract createNecromancer(): Necromancer;
-    public abstract createInputHandler(): InputHandler;
+    public abstract createInputHandler(gameportx: number, gameporty: number): InputHandler;
     public abstract createEngine(referee: Referee, necromancer: Necromancer, inputHandler: InputHandler): Engine;
 }
 
 export interface GameOptions {
     username: string;
+    gameportx: number;
+    gameporty: number;
 }
 
 export interface TcpServerGameOptions extends GameOptions {
@@ -62,14 +64,13 @@ export class TcpServerGameBuilder extends GameBuilder {
         return new NecromancerProxy(this._connection);
     }
 
-    public createInputHandler() {
-        return new InputHandler();
+    public createInputHandler(gameportx: number, gameporty: number) {
+        return new InputHandler(gameportx, gameporty);
     }
 
     public createEngine(referee: Referee, necromancer: Necromancer, inputHandler: InputHandler) {
         let engine = new Engine(referee, necromancer, inputHandler);
         engine.stateChanged.addListner(stateChange => {
-            console.log('should send user action');
             if (stateChange.action instanceof Start || stateChange.action instanceof Shoot) {
                 this._connection.sendUserAction(stateChange.action);
             }

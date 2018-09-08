@@ -1,4 +1,4 @@
-import { State, Archer, Zombie, boardSize } from './state/state';
+import { State, Archer, Zombie, boardSize, Scope } from './state/state';
 import { Action } from './state/reducer';
 import { Hit } from '../network/actions';
 
@@ -16,6 +16,7 @@ export class Renderer {
         this.calibrateCellSize();
         this.renderArcher(state.archer);
         state.zombies.forEach(zombie => this.renderZombie(zombie));
+        this.renderScope(state.scope);
         this.renderAction(action);
     }
 
@@ -26,7 +27,6 @@ export class Renderer {
     }
 
     private renderArcher(archer: Archer) {
-        console.debug('drawing archer');
         let size = this.getArcherSize();
         this._ctx.beginPath();
         this._ctx.rect(archer.position.x * this.xcellSize, this.height - this.ycellSize, size.width, size.height);
@@ -36,7 +36,6 @@ export class Renderer {
     }
 
     private renderZombie(zombie: Zombie) {
-        console.debug('drawing zombie');
         let size = this.getZombieSize();
         this._ctx.beginPath();
         this._ctx.rect(zombie.position.x * this.xcellSize, zombie.position.y * this.ycellSize, size.width, size.height);
@@ -55,6 +54,19 @@ export class Renderer {
                 setTimeout(() => this.render(this.state), 500);
             }
         }
+    }
+
+    renderScope(scope: Scope): any {
+        this._ctx.beginPath();
+        this._ctx.arc(scope.position.x * this.xcellSize, scope.position.y * this.ycellSize, (this.xcellSize / 2) - (this.xcellSize / 10), 0, 2 * Math.PI);
+        this._ctx.stroke();
+        this._ctx.strokeStyle = '#FF0000';
+        this._ctx.closePath();
+        this._ctx.beginPath();
+        this._ctx.arc(scope.position.x * this.xcellSize, scope.position.y * this.ycellSize, 3, 0, 2 * Math.PI);
+        this._ctx.stroke();
+        this._ctx.strokeStyle = '#FF0000';
+        this._ctx.closePath();
     }
 
     private getArcherSize(): { width: number, height: number } {

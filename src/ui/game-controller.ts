@@ -75,6 +75,8 @@ export class GameController {
             let builder = new TcpServerGameBuilder(connectionManager, renderer);
             builder.createGame({
                 username: usernameInput,
+                gameportx: canvas.width,
+                gameporty: canvas.height,
                 host: hostInput,
                 port: Number(portInput) } as GameOptions)
             .then(game => game.start())

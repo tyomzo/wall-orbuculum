@@ -43,13 +43,17 @@ export class TcpConnection implements Connection {
             let message = this._protocol.write(data);
             console.log(`Sending message to server: ${message}`);
             this.client.write(this._protocol.write(data));
+            console.log('Message sent');
             resolve();
         });
     }
 
     private handleServerMessage(data: Buffer) {
-        let gameEvent = this._protocol.read(data.toString('utf8'));
-        this.serverAction.emit(gameEvent);
+        let message = data.toString('utf8');
+        message.split('\n').filter(s => !!s && s.length > 0).forEach(action => {
+            let gameAction = this._protocol.read(action);
+            this.serverAction.emit(gameAction);
+        });
     }
 
 }

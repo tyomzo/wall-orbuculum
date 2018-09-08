@@ -23,8 +23,10 @@ export class ConnectionManager implements IConnetionManager {
     getConnection = () => this._connection;
 
     connect(host: string, port: number): Promise<Connection> {
+        console.info('Connecting to server');
         return this._connectionFactory.createConnection(host, port)
             .then(connection => {
+                console.info('Connected to server');
                 this.onConnectionCreated(connection);
                 return connection;
             });

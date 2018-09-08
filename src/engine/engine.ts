@@ -1,6 +1,6 @@
-import { Hit, ZombieMove, Move, Shoot, Start } from '../network/actions';
+import { Hit, ZombieMove, Move, Shoot, Start, Aim } from '../network/actions';
 import { stateReducer, Action, initialState } from './state/reducer';
-import { State } from './state/state';
+import { State, GamePosition } from './state/state';
 import { Necromancer } from './necromancer';
 import { Referee } from './referee';
 import { EventEmmiter } from '../utils/event-emmiter';
@@ -30,6 +30,7 @@ export class Engine {
         necromancer.zombieMoved.addListner(move => this.onZombieMove(move));
         inputHandler.shoot.addListner(() => this.shoot());
         inputHandler.move.addListner((move) => this.move(move));
+        inputHandler.aim.addListner((aim) => this.aim(aim));
     }
 
     public start(start: Start) {
@@ -41,8 +42,12 @@ export class Engine {
     }
 
     public shoot(): void {
-        let shoot = new Shoot(this.state.archer.position);
+        let shoot = new Shoot(new GamePosition(Math.floor(this.state.scope.position.x), Math.floor(this.state.scope.position.y)));
         this.changeState(shoot);
+    }
+
+    aim(aim: Aim): any {
+        this.changeState(aim);
     }
 
     protected onHit(hit: Hit) {

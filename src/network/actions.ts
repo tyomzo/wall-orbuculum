@@ -28,6 +28,12 @@ export class ZombieMove extends GameEvent {
 
 export abstract class UserAction { }
 
+export class Aim extends UserAction {
+    constructor(public scope: GamePosition) {
+        super();
+    }
+}
+
 export class Move extends UserAction {
     constructor(keyCode: string) {
         super();
@@ -35,9 +41,13 @@ export class Move extends UserAction {
             this.direction = 'left';
         } else if (keyCode === 'ArrowRight') {
             this.direction = 'right';
+        } else if (keyCode === 'ArrowDown') {
+            this.direction = 'down';
+        } else if (keyCode === 'ArrowUp') {
+            this.direction = 'up';
         }
     }
-    direction: 'left' | 'right';
+    direction: 'left' | 'right' | 'up' | 'down';
 }
 
 export class Shoot extends UserAction {
